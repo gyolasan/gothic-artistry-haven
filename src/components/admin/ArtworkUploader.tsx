@@ -57,11 +57,11 @@ const ArtworkUploader = () => {
       setUploadProgress(10);
 
       // Get current user
-      // const { data: userData, error: userError } = await supabase.auth.getUser();
+      const { data: userData, error: userError } = await supabase.auth.getUser();
       
-      // if (userError || !userData.user) {
-      //   throw new Error("You must be logged in to upload artworks");
-      // }
+      if (userError || !userData.user) {
+        throw new Error("You must be logged in to upload artworks");
+      }
       
       setUploadProgress(20);
 

@@ -4,19 +4,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAdmin } from '@/contexts/AdminContext';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 const AdminLogin = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAdmin();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
-      toast.success('Logged in as admin');
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+  
+    if (error) {
+      toast.error('Login failed: ' + error.message);
     } else {
-      toast.error('Invalid password');
+      toast.success('Logged in!');
     }
-    setPassword('');
   };
 
   return (
