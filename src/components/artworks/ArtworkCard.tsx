@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -58,7 +59,7 @@ const ArtworkCard = ({ artwork, className }: ArtworkCardProps) => {
           <DialogHeader>
             <DialogTitle className="text-2xl font-gothic italic text-primary">{artwork.title}</DialogTitle>
             <DialogDescription className="text-muted-foreground">
-              Created on {new Date(artwork.createdAt).toLocaleDateString()}
+              Created on {new Date(artwork.created_at).toLocaleDateString()}
             </DialogDescription>
           </DialogHeader>
           

@@ -1,3 +1,4 @@
+
 import React, { useState, ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,6 +23,7 @@ const ArtworkUploader = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   
   const form = useForm<FormData>({
     defaultValues: {
@@ -52,6 +54,16 @@ const ArtworkUploader = () => {
 
     try {
       setIsUploading(true);
+      setUploadProgress(10);
+
+      // Get current user
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      
+      if (userError || !userData.user) {
+        throw new Error("You must be logged in to upload artworks");
+      }
+      
+      setUploadProgress(20);
 
       // Upload image to Supabase Storage
       const fileExt = selectedFile.name.split('.').pop();
@@ -63,11 +75,15 @@ const ArtworkUploader = () => {
       if (uploadError) {
         throw uploadError;
       }
+      
+      setUploadProgress(60);
 
       // Get the public URL for the uploaded image
       const { data: { publicUrl } } = supabase.storage
         .from('artworks')
         .getPublicUrl(fileName);
+
+      setUploadProgress(80);
 
       // Insert artwork data into the database
       const { error: insertError } = await supabase
@@ -77,13 +93,15 @@ const ArtworkUploader = () => {
           description: data.description,
           image_url: publicUrl,
           categories: data.categories,
-          featured: data.featured
+          featured: data.featured,
+          user_id: userData.user.id // Add the user_id field
         });
 
       if (insertError) {
         throw insertError;
       }
 
+      setUploadProgress(100);
       toast.success("Artwork uploaded successfully!");
       form.reset();
       setSelectedFile(null);
@@ -93,6 +111,7 @@ const ArtworkUploader = () => {
       toast.error("Upload failed. Please try again.");
     } finally {
       setIsUploading(false);
+      setUploadProgress(0);
     }
   };
 
