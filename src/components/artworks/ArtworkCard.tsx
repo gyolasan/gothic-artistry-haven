@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +19,7 @@ const ArtworkCard = ({ artwork, className }: ArtworkCardProps) => {
         <CardContent className="p-0 relative">
           <div className="relative aspect-square w-full overflow-hidden">
             <img
-              src={artwork.imageUrl}
+              src={artwork.image_url}
               alt={artwork.title}
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
             />
@@ -66,7 +65,7 @@ const ArtworkCard = ({ artwork, className }: ArtworkCardProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="overflow-hidden rounded-md">
               <img
-                src={artwork.imageUrl}
+                src={artwork.image_url}
                 alt={artwork.title}
                 className="w-full h-auto object-cover"
               />

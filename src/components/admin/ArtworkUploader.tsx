@@ -2,21 +2,14 @@ import React, { useState, ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { 
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { categories } from '@/data/artworks';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ImagePlus, Upload } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 type FormData = {
   title: string;
@@ -28,7 +21,6 @@ type FormData = {
 const ArtworkUploader = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   
   const form = useForm<FormData>({
@@ -52,37 +44,6 @@ const ArtworkUploader = () => {
     }
   };
 
-  const simulateUpload = async () => {
-    setIsUploading(true);
-    setUploadProgress(0);
-    
-    // Simulate upload progress
-    for (let i = 0; i <= 100; i += 10) {
-      await new Promise(resolve => setTimeout(resolve, 200));
-      setUploadProgress(i);
-    }
-    
-    setIsUploading(false);
-    return true;
-  };
-
-  const triggerRebuild = async () => {
-    try {
-      // This will trigger the GPT Engineer script to rebuild and push changes
-      const event = new CustomEvent('gpteng:select', {
-        detail: {
-          type: 'rebuild',
-          message: 'Rebuilding site after new artwork upload'
-        }
-      });
-      window.dispatchEvent(event);
-      return true;
-    } catch (error) {
-      console.error('Failed to trigger rebuild:', error);
-      return false;
-    }
-  };
-
   const onSubmit = async (data: FormData) => {
     if (!selectedFile) {
       toast.error("Please select an image to upload");
@@ -90,40 +51,48 @@ const ArtworkUploader = () => {
     }
 
     try {
-      // Simulate upload (in a real app, this would upload to a server)
-      const uploadSuccess = await simulateUpload();
-      
-      if (uploadSuccess) {
-        const today = new Date().toISOString().split('T')[0];
-        
-        const newArtwork = {
-          id: uuidv4(),
+      setIsUploading(true);
+
+      // Upload image to Supabase Storage
+      const fileExt = selectedFile.name.split('.').pop();
+      const fileName = `${uuidv4()}.${fileExt}`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('artworks')
+        .upload(fileName, selectedFile);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      // Get the public URL for the uploaded image
+      const { data: { publicUrl } } = supabase.storage
+        .from('artworks')
+        .getPublicUrl(fileName);
+
+      // Insert artwork data into the database
+      const { error: insertError } = await supabase
+        .from('artworks')
+        .insert({
           title: data.title,
           description: data.description,
-          imageUrl: `assets/images/${selectedFile.name}`,
+          image_url: publicUrl,
           categories: data.categories,
-          featured: data.featured,
-          createdAt: today
-        };
+          featured: data.featured
+        });
 
-        console.log('New artwork added:', JSON.stringify(newArtwork, null, 2));
-        
-        // Trigger rebuild after successful upload
-        const rebuildSuccess = await triggerRebuild();
-        
-        if (rebuildSuccess) {
-          toast.success("Artwork uploaded and site rebuild triggered!");
-        } else {
-          toast.warning("Artwork uploaded but site rebuild failed. Please rebuild manually.");
-        }
-        
-        form.reset();
-        setSelectedFile(null);
-        setPreviewUrl(null);
+      if (insertError) {
+        throw insertError;
       }
+
+      toast.success("Artwork uploaded successfully!");
+      form.reset();
+      setSelectedFile(null);
+      setPreviewUrl(null);
     } catch (error) {
       console.error("Upload failed:", error);
       toast.error("Upload failed. Please try again.");
+    } finally {
+      setIsUploading(false);
     }
   };
 

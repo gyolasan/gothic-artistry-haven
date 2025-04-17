@@ -1,28 +1,61 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Filter, X, ImagePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetDescription, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Checkbox } from "@/components/ui/checkbox";
 import ArtworkCard from "@/components/artworks/ArtworkCard";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { artworks, categories } from "@/data/artworks";
+import { categories } from "@/data/artworks";
 import { useAdmin } from "@/contexts/AdminContext";
+import { supabase } from "@/integrations/supabase/client";
+import type { ArtworkType } from "@/data/artworks";
 
 const Gallery = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [artworks, setArtworks] = useState<ArtworkType[]>([]);
+  const [loading, setLoading] = useState(true);
   const { isAdmin } = useAdmin();
+
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      const { data, error } = await supabase
+        .from('artworks')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching artworks:', error);
+        return;
+      }
+
+      setArtworks(data);
+      setLoading(false);
+    };
+
+    fetchArtworks();
+
+    // Subscribe to changes
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'artworks' },
+        (payload) => {
+          fetchArtworks();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   const filteredArtworks = artworks.filter(artwork => {
     const matchesSearch = searchQuery === "" || 
