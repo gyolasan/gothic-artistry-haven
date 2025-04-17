@@ -1,3 +1,4 @@
+import { ArtworkType } from "@/data/artworks";
 
 export type ArtworkType = {
   id: string;
@@ -64,6 +65,15 @@ export const artworks: ArtworkType[] = [
     categories: ["Portrait", "Character", "Fantasy"],
     featured: false,
     createdAt: "2024-02-20"
+  },
+  {
+    id: "7",
+    title: "Ethereal Shadows",
+    description: "A mystical landscape blending gothic architecture with ethereal light.",
+    imageUrl: "/assets/images/ethereal-shadows.png",
+    categories: ["Digital Painting", "Gothic", "Landscape", "Mystical"],
+    featured: false,
+    createdAt: "2024-04-17"
   }
 ];
 
