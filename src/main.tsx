@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-console.log('🚀 Application is attempting to render - v1.0.1');
+console.log('🚀 Application is attempting to render - v1.0.2');
 console.log('Environment:', import.meta.env.MODE);
 
 const rootElement = document.getElementById("root");
