@@ -1,6 +1,6 @@
-
 import { useState } from "react";
-import { Filter, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Filter, X, ImagePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -17,18 +17,18 @@ import ArtworkCard from "@/components/artworks/ArtworkCard";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { artworks, categories } from "@/data/artworks";
+import { useAdmin } from "@/contexts/AdminContext";
 
 const Gallery = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const { isAdmin } = useAdmin();
 
   const filteredArtworks = artworks.filter(artwork => {
-    // Filter by search query
     const matchesSearch = searchQuery === "" || 
       artwork.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       artwork.description.toLowerCase().includes(searchQuery.toLowerCase());
     
-    // Filter by categories
     const matchesCategories = selectedCategories.length === 0 || 
       selectedCategories.some(cat => artwork.categories.includes(cat));
     
@@ -64,7 +64,17 @@ const Gallery = () => {
           </p>
         </div>
 
-        {/* Filters */}
+        {isAdmin && (
+          <div className="mb-6 text-center">
+            <Link to="/admin">
+              <Button variant="gothic" className="flex items-center gap-2">
+                <ImagePlus className="h-4 w-4" />
+                Upload New Artwork
+              </Button>
+            </Link>
+          </div>
+        )}
+
         <div className="mb-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-2">
@@ -139,7 +149,6 @@ const Gallery = () => {
           </div>
         </div>
 
-        {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
           {filteredArtworks.length > 0 ? (
             filteredArtworks.map((artwork) => (

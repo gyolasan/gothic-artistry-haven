@@ -1,5 +1,4 @@
-import { ArtworkType } from "@/data/artworks";
-
+// Define the ArtworkType
 export type ArtworkType = {
   id: string;
   title: string;
@@ -102,6 +101,5 @@ export const categories = [
   "Character",
   "Fantasy",
   "Gothic",
-  "Landscape",
-  "Mystical"
+  "Sky"
 ];
