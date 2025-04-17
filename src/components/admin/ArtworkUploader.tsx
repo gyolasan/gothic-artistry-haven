@@ -1,4 +1,3 @@
-
 import React, { useState, ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -67,6 +66,23 @@ const ArtworkUploader = () => {
     return true;
   };
 
+  const triggerRebuild = async () => {
+    try {
+      // This will trigger the GPT Engineer script to rebuild and push changes
+      const event = new CustomEvent('gpteng:select', {
+        detail: {
+          type: 'rebuild',
+          message: 'Rebuilding site after new artwork upload'
+        }
+      });
+      window.dispatchEvent(event);
+      return true;
+    } catch (error) {
+      console.error('Failed to trigger rebuild:', error);
+      return false;
+    }
+  };
+
   const onSubmit = async (data: FormData) => {
     if (!selectedFile) {
       toast.error("Please select an image to upload");
@@ -74,15 +90,12 @@ const ArtworkUploader = () => {
     }
 
     try {
-      // In a real implementation, you would upload the file to a server
-      // and save the artwork data to a database
+      // Simulate upload (in a real app, this would upload to a server)
       const uploadSuccess = await simulateUpload();
       
       if (uploadSuccess) {
-        // Get current date in YYYY-MM-DD format
         const today = new Date().toISOString().split('T')[0];
         
-        // Format for the console output - in a real app, this would be saved to a database
         const newArtwork = {
           id: uuidv4(),
           title: data.title,
@@ -95,7 +108,15 @@ const ArtworkUploader = () => {
 
         console.log('New artwork added:', JSON.stringify(newArtwork, null, 2));
         
-        toast.success("Artwork uploaded successfully!");
+        // Trigger rebuild after successful upload
+        const rebuildSuccess = await triggerRebuild();
+        
+        if (rebuildSuccess) {
+          toast.success("Artwork uploaded and site rebuild triggered!");
+        } else {
+          toast.warning("Artwork uploaded but site rebuild failed. Please rebuild manually.");
+        }
+        
         form.reset();
         setSelectedFile(null);
         setPreviewUrl(null);
