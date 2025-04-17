@@ -74,6 +74,15 @@ export const artworks: ArtworkType[] = [
     categories: ["Digital Painting", "Gothic", "Landscape", "Mystical"],
     featured: false,
     createdAt: "2024-04-17"
+  },
+  {
+    id: "8",
+    title: "Crimson Twilight",
+    description: "A blood-red sunset over a gothic cityscape with towering spires.",
+    imageUrl: "public/assets/images/1E85C541.jpeg",
+    categories: ["Digital Painting", "Gothic", "Architecture", "Sky"],
+    featured: false,
+    createdAt: "2024-04-18"
   }
 ];
 
