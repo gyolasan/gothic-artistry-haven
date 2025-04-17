@@ -91,5 +91,8 @@ export const categories = [
   "Monochrome",
   "Portrait",
   "Character",
-  "Fantasy"
+  "Fantasy",
+  "Gothic",
+  "Landscape",
+  "Mystical"
 ];
