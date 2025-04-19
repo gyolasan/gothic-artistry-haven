@@ -14,11 +14,12 @@ import { categories } from "@/data/artworks";
 import { useAdmin } from "@/contexts/AdminContext";
 import { supabase } from "@/integrations/supabase/client";
 import type { ArtworkType } from "@/data/artworks";
+import { artworks as sampleArtworks } from "@/data/artworks";
 
 const Gallery = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [artworks, setArtworks] = useState<ArtworkType[]>([]);
+  const [artworks] = useState<ArtworkType[]>(sampleArtworks); // 👈 Just use the local ones
   const [loading, setLoading] = useState(true);
   const { isAdmin } = useAdmin();
 
