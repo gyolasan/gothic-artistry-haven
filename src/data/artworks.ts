@@ -33,9 +33,9 @@ export const categories = [
 export const artworks: ArtworkType[] = [
   {
     id: "1",
-    title: "Gothic Cathedral",
+    title: "Cosmic Warrior",
     description: "A haunting digital painting of a gothic cathedral silhouetted against a stormy night sky.",
-    image_url: "/placeholder.svg",
+    image_url: "./art_files/Cosmic Warrior of Energy and Power.png",
     categories: ["Architecture", "Night", "Gothic"],
     featured: true,
     created_at: new Date().toISOString(),
@@ -43,9 +43,9 @@ export const artworks: ArtworkType[] = [
   },
   {
     id: "2",
-    title: "Ethereal Shadows",
+    title: "Divine Power",
     description: "Dark spirits moving through an ancient forest under moonlight.",
-    image_url: "/placeholder.svg",
+    image_url: "./art_files/Divine Power Amidst Surreal Chaos.png",
     categories: ["Dark Fantasy", "Mystical"],
     featured: false,
     created_at: new Date().toISOString(),
@@ -53,9 +53,9 @@ export const artworks: ArtworkType[] = [
   },
   {
     id: "3",
-    title: "Forgotten Ruins",
+    title: "Celestial Beauty",
     description: "Ancient stone structures standing against the test of time.",
-    image_url: "/placeholder.svg",
+    image_url: "./art_files/Celestial Beauty in Gold and Teal.png",
     categories: ["Landscape", "Conceptual"],
     featured: false,
     created_at: new Date().toISOString(),
