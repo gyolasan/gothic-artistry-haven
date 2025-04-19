@@ -25,7 +25,7 @@ const Header = () => {
         <div className="flex-shrink-0">
           <Link to="/" className="flex items-center">
             <h1 className="text-2xl md:text-3xl font-gothic italic text-primary font-bold animate-pulse-glow">
-              Gothic Art
+              LuhJusto's Art
             </h1>
           </Link>
         </div>

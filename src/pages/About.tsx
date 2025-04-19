@@ -38,29 +38,27 @@ const About = () => {
 
           <div className="space-y-6 text-lg">
             <p>
-              Welcome to my gothic digital art portfolio. I am a digital artist specializing in 
-              dark, atmospheric pieces that explore the beauty found in shadows and mystique. 
-              My work is heavily influenced by gothic architecture, dark romanticism, and the 
-              folklore of ancient cultures.
+              Welcome to my gothic digital art portfolio.
+              I am LuhJusto, a digital artist and creative enigma specializing in mind-bending, atmospheric pieces that dance between the mystical and the surreal.
+              My work brings to life ripped demigods, celestial dragons, sentient machines, and ethereal beings that seem to emerge from dreams you’ve never had.
             </p>
-            
+
             <p>
-              Each piece is created to evoke emotion and tell a story, inviting viewers to explore 
-              worlds where reality blends with fantasy and beauty emerges from darkness. I use digital 
-              painting techniques that combine traditional art principles with modern technology.
+              Each piece is created to evoke emotion and tell a story, inviting viewers to explore
+              worlds where reality blends with fantasy and beauty emerges from darkness. I use primarily paper but also do digital works
             </p>
-            
+
             <Separator className="my-8 opacity-20" />
-            
+
             <h2 className="text-2xl font-gothic italic text-primary">Artistic Philosophy</h2>
             <p>
-              My art seeks to uncover the mysterious beauty in darkness, finding the delicate 
-              balance between haunting and enchanting. I believe that darkness contains a unique 
+              My art seeks to uncover the mysterious beauty in darkness, finding the delicate
+              balance between haunting and enchanting. I believe that darkness contains a unique
               aesthetic value that reveals truths often hidden in the light.
             </p>
-            
+
             <Separator className="my-8 opacity-20" />
-            
+
             <h2 className="text-2xl font-gothic italic text-primary">Process & Techniques</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
               <div className="p-4 gothic-border bg-card/30 backdrop-blur-sm rounded-md flex items-start space-x-3">
@@ -70,7 +68,7 @@ const About = () => {
                   <p className="text-base text-muted-foreground">Starting with raw concepts and refining the core composition</p>
                 </div>
               </div>
-              
+
               <div className="p-4 gothic-border bg-card/30 backdrop-blur-sm rounded-md flex items-start space-x-3">
                 <Layers className="h-5 w-5 text-primary mt-1" />
                 <div>
@@ -78,7 +76,7 @@ const About = () => {
                   <p className="text-base text-muted-foreground">Building atmosphere through multiple layers of texture and light</p>
                 </div>
               </div>
-              
+
               <div className="p-4 gothic-border bg-card/30 backdrop-blur-sm rounded-md flex items-start space-x-3">
                 <Palette className="h-5 w-5 text-primary mt-1" />
                 <div>
@@ -86,7 +84,7 @@ const About = () => {
                   <p className="text-base text-muted-foreground">Using restricted palettes to enhance mood and emotional impact</p>
                 </div>
               </div>
-              
+
               <div className="p-4 gothic-border bg-card/30 backdrop-blur-sm rounded-md flex items-start space-x-3">
                 <LucideImagePlus className="h-5 w-5 text-primary mt-1" />
                 <div>

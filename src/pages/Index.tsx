@@ -23,7 +23,7 @@ const Index = () => {
         <section className="container px-4 py-10 mx-auto animate-fade-in">
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-6xl font-gothic italic tracking-tighter mb-4 text-foreground">
-              <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Gothic Art</span> Portfolio
+              <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">LuhJusto's Art</span> Portfolio
             </h1>
             <p className="text-xl md:text-2xl max-w-2xl mx-auto text-muted-foreground">
               Explore the shadows of imagination through digital art and illustrations

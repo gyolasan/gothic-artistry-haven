@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container px-4 py-8 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-gothic italic text-primary mb-4">Gothic Art</h3>
+            <h3 className="text-xl font-gothic italic text-primary mb-4">LuhJusto's Art</h3>
             <p className="text-muted-foreground">
               A portfolio of dark digital art and illustration exploring the shadows of imagination.
             </p>
@@ -56,7 +56,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-8 pt-4 border-t border-border/40 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Gothic Art Portfolio. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} LuhJusto Art. All rights reserved.</p>
         </div>
       </div>
     </footer>
