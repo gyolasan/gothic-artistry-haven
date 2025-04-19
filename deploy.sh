@@ -31,5 +31,9 @@ git push origin gh-pages --force
 rm -rf ../dist-temp
 
 # Step 10: Return to previous branch (instead of hardcoding 'main')
-PREV_BRANCH=$(git reflog | awk '/checkout/ && NR==1 {print $NF}')
+PREV_BRANCH=$(git reflog | awk '/checkout/ && $0 !~ /gh-pages/ {print $NF; exit}')
+if [ -z "$PREV_BRANCH" ]; then
+  PREV_BRANCH="main"
+fi
+
 git checkout "$PREV_BRANCH"
