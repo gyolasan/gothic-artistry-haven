@@ -61,4 +61,14 @@ export const artworks: ArtworkType[] = [
     created_at: new Date().toISOString(),
     user_id: "system"
   }
+  {
+    id: "4",
+    title: "Genie",
+    description: "Genie.",
+    image_url: "/assets/art_files/genie.png",
+    categories: ["Landscape", "Conceptual"],
+    featured: false,
+    created_at: new Date().toISOString(),
+    user_id: "system"
+  }
 ];
