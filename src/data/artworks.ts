@@ -60,7 +60,7 @@ export const artworks: ArtworkType[] = [
     featured: false,
     created_at: new Date().toISOString(),
     user_id: "system"
-  }
+  },
   {
     id: "4",
     title: "Genie",
